@@ -14,7 +14,7 @@ export default function Footer() {
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                         <span>Built with</span>
                         <Heart className="h-4 w-4 fill-red-500 text-red-500" />
-                        <span>using React & Tailwind CSS</span>
+                        <span>using Nextjs & Tailwind CSS</span>
                     </div>
                 </div>
             </div>
