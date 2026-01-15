@@ -13,6 +13,19 @@ interface Experience {
 
 const experiences: Experience[] = [
     {
+        title: "JC TechSight - Brand Identity & Service Showcase (Project-Based)",
+        company: "JC TechSight Strategies",
+        location: "Online",
+        period: "November – December 2025",
+        responsibilities: [
+            "Developed and launched the official company website and digital presence using modern web technologies.",
+            "Defined brand visual identity, including typography, color palette, and design system.",
+            "Curated and showcased key project portfolios for international agencies and local enterprises.",
+            "Optimized site performance, ensuring high accessibility and implementing SEO best practices.",
+            "Integrated inquiry workflows and automated lead management systems to streamline client engagement.",
+        ],
+    },
+    {
         title: "IT Intern",
         company: "Zenith Capital Credit Group Corporation",
         location: "Taguig City, Metro Manila",

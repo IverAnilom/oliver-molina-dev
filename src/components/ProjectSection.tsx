@@ -68,7 +68,7 @@ const projects: Project[] = [
             "User-friendly interface for document management",
             "Efficient organization of digital records",
         ],
-        tech: ["React.js", "Tailwind CSS", "JavaScript"],
+        tech: ["HTML", "Bootstrap CSS", "JavaScript","PHP"],
         color: "from-blue-500 to-cyan-600",
         featured: false,
     },

@@ -1,41 +1,41 @@
 "use client";
 
+import React from "react";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
 
-type Skill = {
-    name: string;
-    level: number;
-};
-
-type SkillsMap = Record<string, Skill[]>;
-
-const skills: SkillsMap = {
-    "Frontend Development": [
-        { name: "React.js", level: 90 },
-        { name: "JavaScript", level: 85 },
-        { name: "HTML/CSS", level: 95 },
-        { name: "Tailwind CSS", level: 90 },
-        { name: "TypeScript", level: 75 },
-    ],
-    "Backend & Tools": [
-        { name: "Laravel", level: 70 },
-        { name: "Python/Flask", level: 75 },
-        { name: "Supabase", level: 80 },
-        { name: "Firebase", level: 75 },
-        { name: "Git/GitHub", level: 85 },
-    ],
-    "Design & Other": [
-        { name: "UI/UX Design", level: 80 },
-        { name: "Figma", level: 85 },
-        { name: "Canva", level: 90 },
-        { name: "PHP", level: 65 },
-        { name: "Java", level: 60 },
-    ],
+const skillTiers = {
+    "Core Capabilities": {
+        description: "Tools I use daily to build production-ready applications",
+        skills: [
+            "React.js",
+            "Next.js",
+            "HTML/CSS",
+            "Tailwind CSS",
+            "JavaScript",
+        ],
+        color: "from-blue-500 to-cyan-400",
+    },
+    "Design & Workflow": {
+        description: "Essential tools for design and development workflow",
+        skills: ["Git/GitHub", "Figma", "Canva", "Supabase", "UI/UX Design"],
+        color: "from-purple-500 to-pink-400",
+    },
+    "Functional Skills": {
+        description: "Technologies I've used in multiple projects",
+        skills: ["Python", "Flask", "TypeScript", "Firebase", "Laravel"],
+        color: "from-emerald-500 to-teal-400",
+    },
+    "Familiar With": {
+        description: "Technologies I've worked with and can pick up quickly",
+        skills: ["PHP", "Java"],
+        color: "from-orange-500 to-yellow-400",
+    },
 };
 
 const techStack = [
-    { name: "React", color: "from-cyan-400 to-blue-500" },
+    { name: "React / Next", color: "from-cyan-400 to-blue-500" },
     { name: "TypeScript", color: "from-blue-400 to-indigo-500" },
     { name: "Tailwind", color: "from-teal-400 to-cyan-500" },
     { name: "Laravel", color: "from-red-400 to-orange-500" },
@@ -46,27 +46,22 @@ const techStack = [
 ];
 
 export default function SkillsSection() {
-    const ref = useRef<HTMLDivElement | null>(null);
-    const isInView = useInView(ref, {
-        once: true,
-        margin: "-100px",
-    });
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true, margin: "-100px" });
 
     return (
         <section
-            id="skills"
             ref={ref}
             className="relative overflow-hidden bg-[#080810] py-32"
         >
-            {/* Background effects */}
+            {/* Background elements */}
             <div className="absolute top-0 right-0 h-[500px] w-[500px] rounded-full bg-blue-600/5 blur-[150px]" />
             <div className="absolute bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-cyan-600/5 blur-[150px]" />
 
             <div className="relative mx-auto max-w-6xl px-6">
-                {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : undefined}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.8 }}
                     className="mb-20 text-center"
                 >
@@ -82,10 +77,10 @@ export default function SkillsSection() {
                     </p>
                 </motion.div>
 
-                {/* Tech badges */}
+                {/* Floating tech badges */}
                 <motion.div
                     initial={{ opacity: 0 }}
-                    animate={isInView ? { opacity: 1 } : undefined}
+                    animate={isInView ? { opacity: 1 } : {}}
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="mb-20 flex flex-wrap justify-center gap-3"
                 >
@@ -93,12 +88,10 @@ export default function SkillsSection() {
                         <motion.div
                             key={tech.name}
                             initial={{ opacity: 0, y: 20 }}
-                            animate={
-                                isInView ? { opacity: 1, y: 0 } : undefined
-                            }
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            animate={isInView ? { opacity: 1, y: 0 } : {}}
+                            transition={{ duration: 0.5, delay: 0.1 * index }}
                             whileHover={{ scale: 1.05, y: -2 }}
-                            className={`cursor-default rounded-full bg-linear-to-r ${tech.color} px-5 py-2.5 text-sm font-medium text-white shadow-lg`}
+                            className={`rounded-full bg-linear-to-r px-5 py-2.5 ${tech.color} cursor-default text-sm font-medium text-white shadow-lg`}
                         >
                             {tech.name}
                         </motion.div>
@@ -106,57 +99,72 @@ export default function SkillsSection() {
                 </motion.div>
 
                 {/* Skills grid */}
-                <div className="grid gap-8 md:grid-cols-3">
-                    {Object.entries(skills).map(
-                        ([category, skillList], categoryIndex) => (
+                <div className="grid gap-8 md:grid-cols-2">
+                    {Object.entries(skillTiers).map(
+                        ([tier, data], tierIndex) => (
                             <motion.div
-                                key={category}
+                                key={tier}
                                 initial={{ opacity: 0, y: 40 }}
-                                animate={
-                                    isInView ? { opacity: 1, y: 0 } : undefined
-                                }
+                                animate={isInView ? { opacity: 1, y: 0 } : {}}
                                 transition={{
                                     duration: 0.6,
-                                    delay: 0.2 + categoryIndex * 0.1,
+                                    delay: 0.2 + tierIndex * 0.1,
                                 }}
-                                className="rounded-2xl border border-white/10 bg-linear-to-br from-white/5 to-transparent p-8"
+                                className="group relative"
                             >
-                                <h3 className="mb-6 text-xl font-semibold text-white">
-                                    {category}
-                                </h3>
+                                {/* linear background on hover */}
+                                <div
+                                    className={`absolute inset-0 bg-linear-to-br ${data.color} rounded-2xl opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-5`}
+                                />
 
-                                <div className="space-y-5">
-                                    {skillList.map((skill, index) => (
-                                        <div key={skill.name}>
-                                            <div className="mb-2 flex justify-between">
-                                                <span className="text-sm text-gray-400">
-                                                    {skill.name}
-                                                </span>
-                                                <span className="text-sm text-gray-600">
-                                                    {skill.level}%
-                                                </span>
-                                            </div>
-
-                                            <div className="h-1.5 overflow-hidden rounded-full bg-white/5">
-                                                <motion.div
-                                                    initial={{ width: 0 }}
-                                                    animate={
-                                                        isInView
-                                                            ? {
-                                                                  width: `${skill.level}%`,
-                                                              }
-                                                            : undefined
-                                                    }
-                                                    transition={{
-                                                        duration: 1,
-                                                        delay:
-                                                            0.5 + index * 0.1,
-                                                    }}
-                                                    className="h-full rounded-full bg-linear-to-r from-blue-500 to-cyan-400"
-                                                />
-                                            </div>
+                                <div className="relative h-full rounded-2xl border border-white/10 bg-linear-to-br from-white/5 to-transparent p-8 transition-all duration-500 group-hover:border-white/20">
+                                    <div className="mb-4 flex items-start gap-3">
+                                        <div
+                                            className={`h-12 w-1.5 rounded-full bg-linear-to-b ${data.color}`}
+                                        />
+                                        <div>
+                                            <h3 className="mb-2 text-xl font-bold text-white">
+                                                {tier}
+                                            </h3>
+                                            <p className="text-sm text-gray-500">
+                                                {data.description}
+                                            </p>
                                         </div>
-                                    ))}
+                                    </div>
+
+                                    <div className="mt-6 flex flex-wrap gap-2">
+                                        {data.skills.map((skill, index) => (
+                                            <motion.span
+                                                key={skill}
+                                                initial={{
+                                                    opacity: 0,
+                                                    scale: 0.8,
+                                                }}
+                                                animate={
+                                                    isInView
+                                                        ? {
+                                                              opacity: 1,
+                                                              scale: 1,
+                                                          }
+                                                        : {}
+                                                }
+                                                transition={{
+                                                    duration: 0.3,
+                                                    delay:
+                                                        0.4 +
+                                                        tierIndex * 0.1 +
+                                                        index * 0.05,
+                                                }}
+                                                whileHover={{
+                                                    scale: 1.05,
+                                                    y: -2,
+                                                }}
+                                                className="cursor-default rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-gray-300 transition-all hover:border-white/20 hover:bg-white/10"
+                                            >
+                                                {skill}
+                                            </motion.span>
+                                        ))}
+                                    </div>
                                 </div>
                             </motion.div>
                         ),
